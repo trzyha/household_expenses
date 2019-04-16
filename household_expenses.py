@@ -8,20 +8,21 @@ root.geometry('800x600')
 root.minsize(width=800, height=600)
 a = 0
 def add_position():
-    if (entry1.get() != '' and entry2.get() != '' and entry3.get() != ''):
+    if (entry1.get() != '' and entry2.get() != '' and entry3.get() != '' and entry2.get().replace(".", "", 1).isdigit() == True): #isdigit() checks is value digits
         global a
         a = a + 1
         activity = entry1.get()
         value = entry2.get()
         date = entry3.get()
         tree.insert('', 'end', text = a, values=(activity, value, date))
+        tree.configure(background='#334353')
         clear_entry = tk.StringVar(frame, value = '')
         #entry1.delete(0, 'end') #from 0 position to end
         #entry2.delete(0, 'end')
         
 def edit_position():
     activity = ("zakupy w biedro")
-    value = 150,15
+    value = 150.15
     date = "2019-04-05"
     #at = tk.StringVar(frame, value = activity)
     entry1.delete(0, tk.END)
