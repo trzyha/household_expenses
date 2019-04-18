@@ -15,9 +15,9 @@ def add_position():
         activity = entry1.get()
         value = float(entry2.get().replace(',','.')) #replacing if comma appears
         date = entry3.get()
-        tree.insert('', 'end', text = a, values=(activity, value, date))
+        dt.tree.insert('', 'end', text = a, values=(activity, value, date))
         #tree.configure(background='#334353')
-        clear_entry = tk.StringVar(frame, value = '')
+        dt.clear_entry = tk.StringVar(frame, value = '')
         #entry1.delete(0, 'end') #from 0 position to end
         #entry2.delete(0, 'end')
         
@@ -35,20 +35,43 @@ def edit_position():
 
 def delete_position():
     try:
-        selected_item = tree.selection()[0] #get selected row
-        tree.delete(selected_item)
+        selected_item = dt.tree.selection()[0] #get selected row
+        dt.tree.delete(selected_item)
     except:
         pass
     
     
-#class DataTree:
-#    def __init__(self, master):
-        
-        
-        
-        
-        
+class DataTree:
+    def __init__(self, master):
+            frame = tk.Frame(root, bg='#80c1ff')
+#frame.place(relx=0.01, rely=0.1, relwidth=0.9, relheight=0.9, width=100)
+#frame.place(x=10, y=10, relwidth=0.9, relheight=0.9, width=100)
+            frame.grid(row=1, column=0, columnspan=8)
 
+
+            self.tree = ttk.Treeview(frame, height=10, columns=('ID', 'Activities', 'Value[PLN]', 'Date'))
+            self.vsb = ttk.Scrollbar(orient="vertical", command=tree.yview)
+            self.tree.configure(yscrollcommand=self.vsb.set)
+
+            self.tree.heading('#0', text='ID', anchor=tk.CENTER)
+            self.tree.heading('#1', text='Activities', anchor=tk.CENTER)
+            self.tree.heading('#2', text='Value[PLN]', anchor=tk.CENTER)
+            self.tree.heading('#3', text='Date', anchor=tk.CENTER)
+
+            self.tree.column('#0', stretch=tk.NO, width=50)
+            self.tree.column('#1', stretch=tk.YES, minwidth=50, width=100)
+            self.tree.column('#2', stretch=tk.YES, minwidth=50, width=100)
+            self.tree.column('#3', stretch=tk.YES, minwidth=50, width=100)
+
+            
+
+
+            #tree.insert('', 1, text="1", values=("text","przykładowy","01-01-2018"))
+            #tree.insert('', 2, text="3")
+            #tree.insert('', 'end', text="2")
+
+            self.tree.grid(row=1, column=0, columnspan=9, sticky='NSEW', in_=frame)
+            self.vsb.grid(column=9, row=0, rowspan=3, sticky='ns', in_=frame)
 
 
 #------creating menu bar--------
@@ -82,40 +105,12 @@ ttk.Label(root, text="Value [z³]").grid(row=0, column=2)
 ttk.Label(root, text="Date").grid(row=0, column=4)
 
 
-
-#---- frame ----
-frame = tk.Frame(root, bg='#80c1ff')
-#frame.place(relx=0.01, rely=0.1, relwidth=0.9, relheight=0.9, width=100)
-#frame.place(x=10, y=10, relwidth=0.9, relheight=0.9, width=100)
-frame.grid(row=1, column=0, columnspan=8)
-
-
-tree = ttk.Treeview(frame, height=10, columns=('ID', 'Activities', 'Value[PLN]', 'Date'))
-vsb = ttk.Scrollbar(orient="vertical", command=tree.yview)
-tree.configure(yscrollcommand=vsb.set)
-
-tree.heading('#0', text='ID', anchor=tk.CENTER)
-tree.heading('#1', text='Activities', anchor=tk.CENTER)
-tree.heading('#2', text='Value[PLN]', anchor=tk.CENTER)
-tree.heading('#3', text='Date', anchor=tk.CENTER)
-
-tree.column('#0', stretch=tk.NO, width=50)
-tree.column('#1', stretch=tk.YES, minwidth=50, width=100)
-tree.column('#2', stretch=tk.YES, minwidth=50, width=100)
-tree.column('#3', stretch=tk.YES, minwidth=50, width=100)
-
 label1 = ttk.Label(root, text='Sum:')
 label1.grid(row=2,column=0)
 
 
-#tree.insert('', 1, text="1", values=("text","przykładowy","01-01-2018"))
-#tree.insert('', 2, text="3")
-#tree.insert('', 'end', text="2")
-
-tree.grid(row=1, column=0, columnspan=9, sticky='NSEW', in_=frame)
-vsb.grid(column=9, row=0, rowspan=3, sticky='ns', in_=frame)
-
-
 
 if __name__ == "__main__":
+    dt = DataTree(root)
     root.mainloop()
+    
