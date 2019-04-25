@@ -17,9 +17,13 @@ def add_position():
         date = entry3.get()
         dt.tree.insert('', 'end', text = a, values=(activity, value, date))
         #tree.configure(background='#334353')
-        dt.clear_entry = tk.StringVar(frame, value = '')
+        #dt.tree.clear_entry = tk.StringVar(frame, value = '')
         #entry1.delete(0, 'end') #from 0 position to end
         #entry2.delete(0, 'end')
+        #sum_imtes_values = 
+        
+
+        label1.configure(text="Sum: "+"test")
         
 def edit_position():
     activity = ("zakupy w biedro")
@@ -34,6 +38,7 @@ def edit_position():
     entry3.insert(0, date)
 
 def delete_position():
+        print(dt.tree.column[2]('#1'))
     try:
         selected_item = dt.tree.selection()[0] #get selected row
         dt.tree.delete(selected_item)
@@ -50,7 +55,7 @@ class DataTree:
 
 
             self.tree = ttk.Treeview(frame, height=10, columns=('ID', 'Activities', 'Value[PLN]', 'Date'))
-            self.vsb = ttk.Scrollbar(orient="vertical", command=tree.yview)
+            self.vsb = ttk.Scrollbar(orient="vertical", command=self.tree.yview)
             self.tree.configure(yscrollcommand=self.vsb.set)
 
             self.tree.heading('#0', text='ID', anchor=tk.CENTER)
@@ -113,4 +118,3 @@ label1.grid(row=2,column=0)
 if __name__ == "__main__":
     dt = DataTree(root)
     root.mainloop()
-    
